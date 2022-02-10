@@ -93,6 +93,26 @@ execute_process(COMMAND "${CMAKE_COMMAND}" --build .
         WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/spectra-download")
 set(SPECTRA_INCLUDE_DIRS "${CMAKE_BINARY_DIR}/spectra-src/include")
 
+# catkin
+find_package(catkin REQUIRED
+        COMPONENTS
+        roscpp
+        sensor_msgs
+        geometry_msgs
+        message_generation
+)
+add_service_files(
+        DIRECTORY
+        srv
+        FILES
+	EstimateTransform.srv
+)
+generate_messages(
+  DEPENDENCIES
+  sensor_msgs
+  geometry_msgs
+)
+
 # Building Targets
 set(TEASERPP_ROOT ${CMAKE_CURRENT_LIST_DIR})
 add_subdirectory(teaser)
